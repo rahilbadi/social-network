@@ -38,22 +38,9 @@ class PostController extends Controller
             'caption' => $request->caption,
         ]);
 
-    
-        // if($request->hasFile('post_image')){
-            // foreach ($request->post_image as $image) {
-            //     $imagepath = $image->store('images','public');
-            //     ImagePost::create([
-            //         'post_id' => $post->id,
-            //         'post_image' => $imagepath,
-            //     ]);
-            // }
-        // }
         if ($request->hasFile('post_image')) {
             foreach ($request->file('post_image') as $image) {
-                // Store the image in the 'images' directory within 'public'
                 $imagePath = $image->store('images', 'public');
-                // dd($request->file('post_image'));
-                // Create the ImagePost entry
                 ImagePost::create([
                     'post_id' => $post->id,
                     'post_image' => $imagePath,
@@ -69,15 +56,16 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('frontend.posts.edit',compact('post'));
+        
     }
 
     /**

@@ -39,8 +39,7 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->phone_no = $request->phone_no;
         $user->bio = $request->bio;
-        $user->profile_picture = 'default-instagram_profile.jpg';
-        // $user->profile_visibility = $request->profile_visibility;
+
         $user->save();
 
         VerifyUser::create([
@@ -88,7 +87,7 @@ class UserController extends Controller
 
     public function showForgetPasswordForm()
     {
-        return view('frontend.forgot_password.verifymail');
+        return view('frontend.forgot-password.verifymail');
     }
 
     public function sendMailForForgotPassword(UserMailRequest $request)
@@ -107,7 +106,7 @@ class UserController extends Controller
     {
         $verifyUser = verifyUser::where('token', $token)->first();
         if ($verifyUser) {
-            return view('frontend.forgot_password.forget_password', compact('verifyUser'));
+            return view('frontend.forgot-password.forget_password', compact('verifyUser'));
         } else {
             return redirect()->route('login')->with('error', 'your mail is not found');
         }
